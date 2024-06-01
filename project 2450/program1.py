@@ -1,3 +1,11 @@
+# Math: logan
+# read write load store: Tait
+# branches and halt, read me : andrew
+# input output: Vip
+# team unit tests: Tait and logan 
+# design document: Vip
+
+
 memory = [0] * 100
 accumulator = 0
 instruction_counter = 0
