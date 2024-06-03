@@ -3,7 +3,7 @@
 # branches and halt, read me : andrew
 # input output: Vip
 # team unit tests: Tait and logan 
-# design document: Vip1987
+# design document: Vip
 
 
 memory = [0] * 100
@@ -17,27 +17,31 @@ def load_program(program):
 
 def read(operand):
     global memory
-    memory[operand] = int(input("Enter a number: "))
+    memory[operand] = int(input(f"Enter a number for memory location {operand}: "))
 
 def write(operand):
     global memory
-    print(memory[operand])
+    print(f"Output from memory location {operand}: {memory[operand]}")
 
 def load(operand):
     global accumulator, memory
     accumulator = memory[operand]
+    print(f"Loaded value {accumulator} from memory location {operand} into accumulator.")
 
 def store(operand):
     global accumulator, memory
     memory[operand] = accumulator
+    print(f"Stored value {accumulator} from accumulator into memory location {operand}.")
 
 def add(operand):
     global accumulator, memory
     accumulator += memory[operand]
+    print(f"Added value from memory location {operand}, new accumulator value: {accumulator}")
 
 def subtract(operand):
     global accumulator, memory
     accumulator -= memory[operand]
+    print(f"Subtracted value from memory location {operand}, new accumulator value: {accumulator}")
 
 def divide(operand):
     global accumulator, memory
@@ -45,20 +49,24 @@ def divide(operand):
         print("Error: Division by zero")
         return
     accumulator //= memory[operand]
+    print(f"Divided by value from memory location {operand}, new accumulator value: {accumulator}")
 
 def multiply(operand):
     global accumulator, memory
     accumulator *= memory[operand]
+    print(f"Multiplied by value from memory location {operand}, new accumulator value: {accumulator}")
 
 def branch(operand):
     global instruction_counter
     instruction_counter = operand
+    print(f"Branched to instruction at memory location {operand}.")
     return True
 
 def branchneg(operand):
     global accumulator, instruction_counter
     if accumulator < 0:
         instruction_counter = operand
+        print(f"Branched to instruction at memory location {operand} because accumulator is negative.")
         return True
     return False
 
@@ -66,6 +74,7 @@ def branchzero(operand):
     global accumulator, instruction_counter
     if accumulator == 0:
         instruction_counter = operand
+        print(f"Branched to instruction at memory location {operand} because accumulator is zero.")
         return True
     return False
 
@@ -74,6 +83,7 @@ def halt():
     return True
 
 def execute_instruction(instruction):
+    global accumulator
     opcode = instruction // 100
     operand = instruction % 100
 
@@ -94,15 +104,28 @@ def execute_instruction(instruction):
     elif opcode == 33:
         multiply(operand)
     elif opcode == 40:
-        return branch(operand)
+        if branch(operand):
+            return True
     elif opcode == 41:
-        return branchneg(operand)
+        if branchneg(operand):
+            return True
     elif opcode == 42:
-        return branchzero(operand)
+        if branchzero(operand):
+            return True
     elif opcode == 43:
-        return halt()
-
+        if halt():
+            return True
+    
+    print(f"Accumulator after executing instruction {instruction}: {accumulator}")
+    print_memory()
     return False
+
+def print_memory():
+    print("Memory content:")
+    print("     " + " ".join(f"{i:4}" for i in range(10)))
+    for i in range(0, len(memory), 10):
+        print(f"{i:2} | " + " ".join(f"{memory[i+j]:4}" for j in range(10)))
+    print()
 
 def run():
     global instruction_counter
@@ -111,14 +134,25 @@ def run():
         instruction_counter += 1
         if execute_instruction(instruction):
             break
+    print_memory()
+    print(f"Final accumulator value: {accumulator}")
+
+
+def read_program_from_file(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    program = [int(line.strip()) for line in lines if line.strip()]
+    return program
 
 if __name__ == "__main__":
-    program = [
-        1007,  # READ into location 07
-        2007,  # LOAD from location 07
-        2108,  # STORE into location 08
-        1108,  # WRITE from location 08
-        4300,  # HALT
-    ]
-    load_program(program)
-    run()
+    test_files = ['Test1.txt', 'Test2.txt']
+    for test_file in test_files:
+        print(f"Running program from {test_file}")
+        program = read_program_from_file(test_file)
+        load_program(program)
+        run()
+        print("\n" + "-"*30 + "\n")
+        # Reset memory and registers for the next program
+        memory = [0] * 100
+        accumulator = 0
+        instruction_counter = 0
