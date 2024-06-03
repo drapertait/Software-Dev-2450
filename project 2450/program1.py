@@ -3,7 +3,7 @@
 # branches and halt, read me : andrew
 # input output: Vip
 # team unit tests: Tait and logan 
-# design document: Vip
+# design document: Vip1987
 
 
 memory = [0] * 100
