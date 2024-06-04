@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-
+from program1 import *
 # Importing the functions from the UVSim module if they were in a separate file
 # from uvsim import load_program, read, write, load, store, add, subtract, divide, multiply, branch, branchneg, branchzero, halt, execute_instruction, run
 
