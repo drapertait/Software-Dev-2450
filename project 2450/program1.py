@@ -146,18 +146,13 @@ def read_program_from_file(file_path):
     return program
 
 if __name__ == "__main__":
-        operand = 11
-        memory[operand] = 1111
-        accumulator = 2222
-        add(operand)
-        assert accumulator == 3333
-    # test_files = ['Test1.txt', 'Test2.txt']
-    # for test_file in test_files:
-    #     print(f"Running program from {test_file}")
-    #     program = read_program_from_file(test_file)
-    #     load_program(program)
-    #     run()
-    #     print("\n" + "-"*30 + "\n")
+    test_files = ['Test1.txt', 'Test2.txt']
+    for test_file in test_files:
+        print(f"Running program from {test_file}")
+        program = read_program_from_file(test_file)
+        load_program(program)
+        run()
+        print("\n" + "-"*30 + "\n")
         # Reset memory and registers for the next program
         memory = [0] * 100
         accumulator = 0
