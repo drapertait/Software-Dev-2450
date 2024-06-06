@@ -21,7 +21,6 @@ def read(operand):
 
 def write(operand):
     global memory
-    memory[operand] = accumulator
     print(f"Output from memory location {operand}: {memory[operand]}")
 
 def load(operand):
