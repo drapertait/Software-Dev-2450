@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from program1 import *
+import program1
 # Importing the functions from the UVSim module if they were in a separate file
 # from uvsim import load_program, read, write, load, store, add, subtract, divide, multiply, branch, branchneg, branchzero, halt, execute_instruction, run
 
@@ -48,32 +49,29 @@ class TestUVSim(unittest.TestCase):
     def test_add(self):
         global accumulator
         operand = 11
-        memory[operand] = 1111
-        accumulator = 2222
-        add(operand)
-        assert accumulator == 3333
+        program1.memory[operand] = 1111
+        program1.accumulator = 2222
+        assert add(operand) == 3333
 
     def test_subtract(self):
         global accumulator
         operand = 12
-        memory[operand] = 1111
-        accumulator = 3333
-        subtract(operand)
-        assert accumulator == 2222
+        program1.memory[operand] = 1111
+        program1.accumulator = 3333
+        assert subtract(operand)  == 2222
 
     def test_divide_success(self):
         global accumulator
         operand = 13
-        memory[operand] = 2
-        accumulator = 10
-        divide(operand)
-        assert accumulator == 5
+        program1.memory[operand] = 2
+        program1.accumulator = 10
+        assert divide(operand) == 5
 
     def test_divide_by_zero(self):
         global accumulator
         operand = 14
-        memory[operand] = 0
-        accumulator = 10
+        program1.memory[operand] = 0
+        program1.accumulator = 10
         with patch('builtins.print') as mock_print:
             divide(operand)
             mock_print.assert_called_with("Error: Division by zero")
@@ -81,10 +79,9 @@ class TestUVSim(unittest.TestCase):
     def test_multiply(self):
         global accumulator
         operand = 15
-        memory[operand] = 3
-        accumulator = 4
-        multiply(operand)
-        assert accumulator == 12
+        program1.memory[operand] = 3
+        program1.accumulator = 4
+        assert multiply(operand) == 12
 
     def test_branch(self):
         global instruction_counter

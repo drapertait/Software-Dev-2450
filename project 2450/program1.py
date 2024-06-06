@@ -38,22 +38,29 @@ def add(operand):
     global accumulator, memory
     accumulator += memory[operand]
     print(f"Added value from memory location {operand}, new accumulator value: {accumulator}")
+    return accumulator
 
-def subtract(operand):
+def subtract(operand,test=None):
     global accumulator, memory
+    if test:
+        memory[operand]=test
     accumulator -= memory[operand]
     print(f"Subtracted value from memory location {operand}, new accumulator value: {accumulator}")
 
-def divide(operand):
+def divide(operand,test=None):
     global accumulator, memory
+    if test:
+        memory[operand]=test
     if memory[operand] == 0:
         print("Error: Division by zero")
         return
     accumulator //= memory[operand]
     print(f"Divided by value from memory location {operand}, new accumulator value: {accumulator}")
 
-def multiply(operand):
+def multiply(operand,test=None):
     global accumulator, memory
+    if test:
+        memory[operand]=test
     accumulator *= memory[operand]
     print(f"Multiplied by value from memory location {operand}, new accumulator value: {accumulator}")
 
