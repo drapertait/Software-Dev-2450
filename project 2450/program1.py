@@ -152,14 +152,28 @@ def read_program_from_file(file_path):
     return program
 
 if __name__ == "__main__":
-    test_files = ['Test1.txt', 'Test2.txt']
-    for test_file in test_files:
-        print(f"Running program from {test_file}")
-        program = read_program_from_file(test_file)
-        load_program(program)
-        run()
-        print("\n" + "-"*30 + "\n")
-        # Reset memory and registers for the next program
-        memory = [0] * 100
-        accumulator = 0
-        instruction_counter = 0
+    
+    while True:
+        try:
+            file = input("Please enter a file name (or press 'q' to quit): ")
+            if file.lower() == 'q':
+                print("Exiting program.")
+                break
+            if not file.endswith(".txt"):
+                file += ".txt"
+            program = read_program_from_file(file)
+            load_program(program)
+            run()
+        except FileNotFoundError:
+            print(f"Error: File '{file}' not found. Please try again.")
+        except ValueError:
+            print(f"Error: File '{file}' contains invalid data. Please check the file and try again.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}. Please try again.")
+        finally:
+            # Reset memory and registers for the next program
+            memory = [0] * 100
+            accumulator = 0
+            instruction_counter = 0
+    print("\n" + "-"*30 + "\n")
+
