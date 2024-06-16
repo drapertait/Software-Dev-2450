@@ -5,7 +5,6 @@
 # team unit tests: Tait and logan
 # design document: Vip
 
-
 memory = [0] * 100
 accumulator = 0
 instruction_counter = 0
@@ -83,37 +82,26 @@ def multiply(operand, test=None):
 def branch(operand):
     global instruction_counter
     instruction_counter = operand
-    print(f"Branched to instruction at memory location {operand}.")
-    return True
 
 
 def branchneg(operand):
-    global accumulator, instruction_counter
+    global instruction_counter, accumulator
     if accumulator < 0:
         instruction_counter = operand
-        print(
-            f"Branched to instruction at memory location {operand} because accumulator is negative.")
-        return True
-    return False
 
 
 def branchzero(operand):
-    global accumulator, instruction_counter
+    global instruction_counter, accumulator
     if accumulator == 0:
         instruction_counter = operand
-        print(
-            f"Branched to instruction at memory location {operand} because accumulator is zero.")
-        return True
-    return False
 
 
 def halt():
-    print("Program halted.")
+    print("Program encountered halt (43) opcode.")
     return True
 
 
 def execute_instruction(instruction):
-    global accumulator
     opcode = instruction // 100
     operand = instruction % 100
 
@@ -134,14 +122,11 @@ def execute_instruction(instruction):
     elif opcode == 33:
         multiply(operand)
     elif opcode == 40:
-        if branch(operand):
-            return True
+        branch(operand)
     elif opcode == 41:
-        if branchneg(operand):
-            return True
+        branchneg(operand)
     elif opcode == 42:
-        if branchzero(operand):
-            return True
+        branchzero(operand)
     elif opcode == 43:
         if halt():
             return True
@@ -166,7 +151,9 @@ def run():
         instruction = memory[instruction_counter]
         instruction_counter += 1
         if execute_instruction(instruction):
-            break
+            user_input = input("Do you want to continue? (y/n): ")
+            if user_input.lower() != 'y':
+                break
     print_memory()
     print(f"Final accumulator value: {accumulator}")
 
