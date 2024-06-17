@@ -55,6 +55,7 @@ class SimulatorGUI:
         self.simulator.run()
         self.output_text.insert(tk.END, "Program executed.\n")
 
+    # Handle inputs from module 2
     def output_function(self, message):
         if message.startswith("Enter a number"):
             return simpledialog.askstring("Input", message)
