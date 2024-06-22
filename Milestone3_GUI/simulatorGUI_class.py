@@ -4,11 +4,11 @@ from tkinter import simpledialog
 from tkinter import messagebox
 
 
-class SimulatorGUI:
+class UVsim:
     def __init__(self, simulator):
         self.simulator = simulator
         self.root = tk.Tk()
-        self.root.title("Simulator GUI")
+        self.root.title("UVsim GUI")
 
         # Create a frame for buttons
         self.button_frame = tk.Frame(self.root)
