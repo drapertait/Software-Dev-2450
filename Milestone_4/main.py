@@ -1,5 +1,5 @@
 from simulator_class import Simulator
-from uvsim_gui import UVsim  # Updated import statement
+from uvsim_gui import UVsim
 
 if __name__ == "__main__":
     gui = UVsim(None)

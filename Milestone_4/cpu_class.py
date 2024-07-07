@@ -107,10 +107,6 @@ class CPU:
 
     def halt(self):
         self.output_function("Program encountered halt (43) opcode.")
-        self.output_function(
-            "Outputs from read and write operations (opcode 10 and 11) up to this point:", is_user_output=True)
-        for output in self.outputs:
-            self.output_function(output, is_user_output=True)
         return True
 
     def reset(self):
