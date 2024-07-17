@@ -37,14 +37,6 @@ class UVsim:
                                      width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
         self.save_button.grid(row=0, column=2, padx=5)
 
-        self.add_button = tk.Button(self.control_frame, text="Add Command", command=self.add_command,
-                                    width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
-        self.add_button.grid(row=0, column=3, padx=5)
-
-        self.delete_button = tk.Button(self.control_frame, text="Delete Command", command=self.delete_command,
-                                       width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
-        self.delete_button.grid(row=0, column=4, padx=5)
-
         # Frame for user input
         self.input_frame = tk.Frame(self.root, bg=self.primary_color)
         self.input_frame.pack(pady=10)
@@ -186,21 +178,6 @@ class UVsim:
         self.simulator.load_program(program_code)
         self.simulator.run()
         self.diagnostic_output_text.insert(tk.END, "Program executed.\n")
-
-    def add_command(self):
-        if len(self.user_output_text.get("1.0", tk.END).strip().splitlines()) >= 100:
-            messagebox.showerror(
-                "Error", "Cannot add more commands. Maximum limit of 100 reached.")
-            return
-        self.user_output_text.insert(tk.END, "0000\n")
-
-    def delete_command(self):
-        try:
-            start, end = self.user_output_text.index(
-                "sel.first"), self.user_output_text.index("sel.last")
-            self.user_output_text.delete(start, end)
-        except tk.TclError:
-            messagebox.showwarning("Warning", "No text selected")
 
     def paste_text(self):
         clipboard_content = self.root.clipboard_get()

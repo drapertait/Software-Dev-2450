@@ -4,10 +4,9 @@ import configparser
 
 
 def load_color_scheme():
-    config = configparser.ConfigParser()
-    config.read('config.txt')
-    primary_color = config['DEFAULT'].get('primary_color', '#4C721D')
-    off_color = config['DEFAULT'].get('off_color', '#FFFFFF')
+    # Always set default color scheme
+    primary_color = '#4C721D'
+    off_color = '#FFFFFF'
     return primary_color, off_color
 
 

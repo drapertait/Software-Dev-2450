@@ -1,4 +1,4 @@
 [DEFAULT]
-primary_color = #008000
-off_color = #000000
+primary_color = #8080ff
+off_color = #400040
 
