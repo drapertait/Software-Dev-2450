@@ -33,9 +33,13 @@ class UVsim:
                                     width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
         self.run_button.grid(row=0, column=1, padx=5)
 
+        self.rerun_button = tk.Button(self.control_frame, text="Re Run Current File", command=self.rerun_program,
+                                      width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
+        self.rerun_button.grid(row=0, column=2, padx=5)
+
         self.save_button = tk.Button(self.control_frame, text="Save Program", command=self.save_program,
                                      width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
-        self.save_button.grid(row=0, column=2, padx=5)
+        self.save_button.grid(row=0, column=3, padx=5)
 
         # Frame for user input
         self.input_frame = tk.Frame(self.root, bg=self.primary_color)
@@ -178,6 +182,16 @@ class UVsim:
         self.simulator.load_program(program_code)
         self.simulator.run()
         self.diagnostic_output_text.insert(tk.END, "Program executed.\n")
+
+    def rerun_program(self):
+        if self.current_file:
+            self.clear_outputs()  # Clear outputs before running the program
+            self.simulator.load_program_from_file(self.current_file)
+            self.simulator.run()
+            self.diagnostic_output_text.insert(tk.END, "Program rerun.\n")
+        else:
+            self.diagnostic_output_text.insert(
+                tk.END, "No program loaded to rerun.\n")
 
     def paste_text(self):
         clipboard_content = self.root.clipboard_get()
