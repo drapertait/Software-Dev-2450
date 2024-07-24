@@ -13,13 +13,19 @@ def load_color_scheme():
 def apply_color_scheme(root, primary_color, off_color):
     root.configure(bg=primary_color)
     for widget in root.winfo_children():
-        widget.configure(bg=primary_color)
+        try:
+            widget.configure(bg=primary_color)
+        except tk.TclError:
+            pass
         if 'fg' in widget.keys():
             widget.configure(fg=get_contrasting_color(off_color))
         if isinstance(widget, tk.Text):
             widget.configure(bg=off_color, fg=get_contrasting_color(off_color))
         for subwidget in widget.winfo_children():
-            subwidget.configure(bg=primary_color)
+            try:
+                subwidget.configure(bg=primary_color)
+            except tk.TclError:
+                pass
             if 'fg' in subwidget.keys():
                 subwidget.configure(fg=get_contrasting_color(off_color))
             if isinstance(subwidget, tk.Text):

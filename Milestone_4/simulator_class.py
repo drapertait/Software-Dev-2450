@@ -1,13 +1,12 @@
 from cpu_class import CPU
 from memory_class import Memory
-from program_loader_class import ProgramLoader
 
 
 class Simulator:
-    def __init__(self, output_function):
+    def __init__(self, output_function, loader):
         self.memory = Memory()
         self.cpu = CPU(self.memory, output_function)
-        self.loader = ProgramLoader()
+        self.loader = loader
 
     def load_program_from_file(self, file_path):
         self.reset()  # Reset the simulator state before loading a new program

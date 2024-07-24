@@ -6,15 +6,12 @@ class CPU:
         self.outputs = []
         self.output_function = output_function
         self.WORD_SIZE = 2**15  # 16-bit word size
-        self.MAX_VALUE = 9999   # Maximum 4-digit value
-        self.MIN_VALUE = -9999  # Minimum 4-digit value
 
-    # For overflow issues
-    def truncate_to_word_size(self, value):
-        if value > self.MAX_VALUE:
-            return self.MAX_VALUE
-        elif value < self.MIN_VALUE:
-            return self.MIN_VALUE
+    def check_overflow(self, value):
+        if value >= self.WORD_SIZE:
+            return value - 2 * self.WORD_SIZE
+        elif value < -self.WORD_SIZE:
+            return value + 2 * self.WORD_SIZE
         return value
 
     def execute_instruction(self, instruction):
@@ -73,13 +70,13 @@ class CPU:
 
     def add(self, operand):
         self.accumulator += self.memory.read(operand)
-        self.accumulator = self.truncate_to_word_size(self.accumulator)
+        self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
             f"Added value from memory location {operand}, new accumulator value: {self.accumulator}")
 
     def subtract(self, operand):
         self.accumulator -= self.memory.read(operand)
-        self.accumulator = self.truncate_to_word_size(self.accumulator)
+        self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
             f"Subtracted value from memory location {operand}, new accumulator value: {self.accumulator}")
 
@@ -88,13 +85,12 @@ class CPU:
             self.output_function("Error: Division by zero")
             return
         self.accumulator //= self.memory.read(operand)
-        self.accumulator = self.truncate_to_word_size(self.accumulator)
         self.output_function(
             f"Divided by value from memory location {operand}, new accumulator value: {self.accumulator}")
 
     def multiply(self, operand):
         self.accumulator *= self.memory.read(operand)
-        self.accumulator = self.truncate_to_word_size(self.accumulator)
+        self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
             f"Multiplied by value from memory location {operand}, new accumulator value: {self.accumulator}")
 
