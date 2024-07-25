@@ -5,7 +5,7 @@ class CPU:
         self.memory = memory
         self.outputs = []
         self.output_function = output_function
-        self.WORD_SIZE = 2**15  # 16-bit word size
+        self.WORD_SIZE = 2**24  # 24-bit word size
 
     def check_overflow(self, value):
         if value >= self.WORD_SIZE:
@@ -15,9 +15,13 @@ class CPU:
         return value
 
     def execute_instruction(self, instruction):
-        opcode = instruction // 100
-        operand = instruction % 100
+        opcode = instruction // 100000
+        operand = instruction % 100000
 
+        if operand >= 250:
+            self.output_function(f"Error: Invalid operand {operand}")
+            return True
+        
         if opcode == 10:
             self.read(operand)
         elif opcode == 11:
@@ -49,12 +53,12 @@ class CPU:
         value = int(self.output_function(
             f"Enter a number for memory location {operand}: "))
         self.memory.write(operand, value)
-        output = f"Executed read (opcode 10) on memory location {operand}: {value}"
+        output = f"Executed read (opcode 010) on memory location {operand}: {value}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
     def write(self, operand):
-        output = f"Executed write (opcode 11) on memory location {operand}: {self.memory.read(operand)}"
+        output = f"Executed write (opcode 011) on memory location {operand}: {self.memory.read(operand)}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
@@ -106,7 +110,7 @@ class CPU:
             self.instruction_counter = operand
 
     def halt(self):
-        self.output_function("Program encountered halt (43) opcode.")
+        self.output_function("Program encountered halt (043) opcode.")
         return True
 
     def reset(self):

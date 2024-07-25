@@ -14,6 +14,8 @@ class Simulator:
         self.load_program(program)
 
     def load_program(self, program):
+        if len(program) > 250:
+            raise ValueError("Program exceeds the maximum allowed size of 250 commands ")
         for i, instruction in enumerate(program):
             self.memory.write(i, instruction)
 
@@ -24,8 +26,7 @@ class Simulator:
             if self.cpu.execute_instruction(instruction):
                 break
 
-        self.cpu.output_function(
-            f"Final accumulator value: {self.cpu.accumulator}")
+        self.cpu.output_function(f"Final accumulator value: {self.cpu.accumulator}")
         self.cpu.output_function(str(self.memory))
 
     def reset(self):

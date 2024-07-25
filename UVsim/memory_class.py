@@ -1,5 +1,5 @@
 class Memory:
-    def __init__(self, size=100):
+    def __init__(self, size=250):
         self.memory = [0] * size
 
     def read(self, address):
@@ -12,4 +12,4 @@ class Memory:
         self.memory = [0] * len(self.memory)
 
     def __str__(self):
-        return "\n".join(f"{i}: {val}" for i, val in enumerate(self.memory))
+        return "\n".join(f"{i:03}: {val:06}" for i, val in enumerate(self.memory))

@@ -17,6 +17,8 @@
 
 
 
+### UNIT TESTING
+1) RUN: python -m unittest test_cpu.py
 
 
 ### Documentation Updates (30 pts)

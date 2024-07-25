@@ -1,13 +1,20 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+valid_function_codes = {"10", "11", "20", "21", "30", "31", "32", "33", "40", "41", "42", "43"}
+
 def convert_4bit_to_6bit(operation):
-    """Convert a 4-digit string to a 6-digit string by inserting '00' in the middle."""
+    """Convert a 4-digit string to a 6-digit string by converting function codes and numbers appropriately."""
     print(f"Converting operation: {operation}")  # Debug print
     # Check if the operation is exactly 4 digits
     if len(operation) == 4 and operation.isdigit():
-        # Convert to 6-digit by inserting '00' in the middle
-        result = operation[:2] + '00' + operation[2:]
+        function_code = operation[:2]
+        if function_code in valid_function_codes:
+            # Convert to 6-digit by inserting '00' in the middle for function codes
+            result = '0' + function_code + '0' + operation[2:]
+        else:
+            # Convert to 6-digit by prepending '00' for numeric values
+            result = '00' + operation
         print(f"Converted to 6-bit: {result}")  # Debug print
         return result
     print(f"No conversion needed for: {operation}")  # Debug print
@@ -20,6 +27,10 @@ def open_file(text_area):
         try:
             with open(file_path, 'r') as file:
                 content = file.read()
+
+            if len(content.splitlines()) > 250:
+                messagebox.showerror("Error", "File exceeds the maximum allowed size of 250 lines.")
+                return None
             
             print(f"Original content from file:\n{content}")  # Debug print
             
@@ -49,7 +60,11 @@ def save_file(text_area, current_file):
     if current_file:
         try:
             with open(current_file, 'w') as file:
-                file.write(text_area.get(1.0, tk.END))
+                content = text_area.get(1.0, tk.END).strip()
+                if len(content.splitlines()) > 250:
+                    messagebox.showerror("Error", "Content exceeds the maximum allowed size of 250 lines.")
+                    return
+                file.write(content)
         except IOError as e:
             messagebox.showerror("Error", f"Unable to save file: {e}")
     else:
@@ -61,12 +76,15 @@ def save_file_as(text_area):
     if file_path:
         try:
             with open(file_path, 'w') as file:
-                file.write(text_area.get(1.0, tk.END))
+                content = text_area.get(1.0, tk.END).strip()
+                if len(content.splitlines()) > 250:
+                    messagebox.showerror("Error", "Content exceeds the maximum allowed size of 250 lines.")
+                    return
+                file.write(content)
         except IOError as e:
             messagebox.showerror("Error", f"Unable to save file: {e}")
         return file_path
     return None
-
 
 
 
