@@ -14,3 +14,21 @@
 3) Open the command prompt
 4) input into console: python3 program1.py
 5) The program will prompt for user input on console and addtional instructions
+
+
+
+
+
+### Documentation Updates (30 pts)
+
+1. **Use Cases** : Add new use cases to reflect the updated features.
+2. **ANDREW: Class Design Doc** : Create and update the class design documentation.
+3. **ANDREW: GUI Wireframe** : Include a wireframe of the GUI.
+4. **ANDREW: Requirements** : Update the requirements to match the current state of the app.
+5. **ANDREW: README** : Expand the README to serve as a comprehensive user manual, covering:
+
+* Menu options and their functions.
+* Instructions on changing the color scheme.
+* Functionality and usage of the Add Command button.
+* Functionality and usage of the Delete Command button.
+* Instructions on saving the file before and after running the program.
