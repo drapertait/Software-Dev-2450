@@ -1,8 +1,5 @@
-import sys
-import os
 import pytest
 from unittest.mock import Mock
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from cpu_class import CPU
 
 @pytest.fixture
@@ -15,45 +12,45 @@ def test_read(cpu):
     cpu.output_function.return_value = '1234'
     cpu.read(7)
     cpu.memory.write.assert_called_with(7, 1234)
-    cpu.output_function.assert_any_call("Executed read (opcode 010) on memory location 7: 1234", is_user_output=True)
+    cpu.output_function.assert_any_call("Executed read (opcode 010) on memory location 007: 1234", is_user_output=True)
 
 def test_write(cpu):
     cpu.memory.read.return_value = 4321
     cpu.write(7)
-    cpu.output_function.assert_any_call("Executed write (opcode 011) on memory location 7: 4321", is_user_output=True)
+    cpu.output_function.assert_any_call("Executed write (opcode 011) on memory location 007: 4321", is_user_output=True)
 
 def test_load(cpu):
     cpu.memory.read.return_value = 1000
     cpu.load(10)
     assert cpu.accumulator == 1000
-    cpu.output_function.assert_any_call("Loaded value 1000 from memory location 10 into accumulator.")
+    cpu.output_function.assert_any_call("Loaded value 1000 from memory location 010 into accumulator.")
 
 def test_store(cpu):
     cpu.accumulator = 2000
     cpu.store(10)
     cpu.memory.write.assert_called_with(10, 2000)
-    cpu.output_function.assert_any_call("Stored value 2000 from accumulator into memory location 10.")
+    cpu.output_function.assert_any_call("Stored value 2000 from accumulator into memory location 010.")
 
 def test_add(cpu):
     cpu.memory.read.return_value = 3000
     cpu.accumulator = 2000
     cpu.add(5)
     assert cpu.accumulator == 5000
-    cpu.output_function.assert_any_call("Added value from memory location 5, new accumulator value: 5000")
+    cpu.output_function.assert_any_call("Added value from memory location 005, new accumulator value: 5000")
 
 def test_subtract(cpu):
     cpu.memory.read.return_value = 1000
     cpu.accumulator = 2000
     cpu.subtract(5)
     assert cpu.accumulator == 1000
-    cpu.output_function.assert_any_call("Subtracted value from memory location 5, new accumulator value: 1000")
+    cpu.output_function.assert_any_call("Subtracted value from memory location 005, new accumulator value: 1000")
 
 def test_divide(cpu):
     cpu.memory.read.return_value = 2
     cpu.accumulator = 10
     cpu.divide(5)
     assert cpu.accumulator == 5
-    cpu.output_function.assert_any_call("Divided by value from memory location 5, new accumulator value: 5")
+    cpu.output_function.assert_any_call("Divided by value from memory location 005, new accumulator value: 5")
 
 def test_divide_by_zero(cpu):
     cpu.memory.read.return_value = 0
@@ -66,7 +63,7 @@ def test_multiply(cpu):
     cpu.accumulator = 4
     cpu.multiply(5)
     assert cpu.accumulator == 12
-    cpu.output_function.assert_any_call("Multiplied by value from memory location 5, new accumulator value: 12")
+    cpu.output_function.assert_any_call("Multiplied by value from memory location 005, new accumulator value: 12")
 
 def test_branch(cpu):
     cpu.branch(20)
@@ -100,8 +97,8 @@ def test_overflow(cpu):
     cpu.memory.read.return_value = 5
     cpu.accumulator = 9999
     cpu.add(5)
-    assert cpu.accumulator == 9999
-    cpu.output_function.assert_any_call("Added value from memory location 5, new accumulator value: 9999")
+    assert cpu.accumulator == -9994  # Adjusted based on new overflow logic
+    cpu.output_function.assert_any_call("Added value from memory location 005, new accumulator value: -9994")
 
 def test_execute_instruction_read(cpu):
     cpu.output_function.return_value = '1234'
@@ -111,7 +108,7 @@ def test_execute_instruction_read(cpu):
 def test_execute_instruction_write(cpu):
     cpu.memory.read.return_value = 4321
     cpu.execute_instruction(110007)
-    cpu.output_function.assert_any_call("Executed write (opcode 011) on memory location 7: 4321", is_user_output=True)
+    cpu.output_function.assert_any_call("Executed write (opcode 011) on memory location 007: 4321", is_user_output=True)
 
 def test_execute_instruction_invalid_operand(cpu):
     assert cpu.execute_instruction(100250) is True

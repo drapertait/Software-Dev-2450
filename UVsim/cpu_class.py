@@ -11,9 +11,9 @@ class CPU:
 
     def check_overflow(self, value):
         if value > self.MAX_VALUE:
-            return self.MAX_VALUE
+            return value - 2 * (self.MAX_VALUE + 1)
         elif value < self.MIN_VALUE:
-            return self.MIN_VALUE
+            return value + 2 * (self.MAX_VALUE + 1)
         return value
 
     def execute_instruction(self, instruction):
@@ -55,36 +55,36 @@ class CPU:
         value = int(self.output_function(
             f"Enter a number for memory location {operand}: "))
         self.memory.write(operand, value)
-        output = f"Executed read (opcode 010) on memory location {operand}: {value}"
+        output = f"Executed read (opcode 010) on memory location {operand:03d}: {value}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
     def write(self, operand):
-        output = f"Executed write (opcode 011) on memory location {operand}: {self.memory.read(operand)}"
+        output = f"Executed write (opcode 011) on memory location {operand:03d}: {self.memory.read(operand)}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
     def load(self, operand):
         self.accumulator = self.memory.read(operand)
         self.output_function(
-            f"Loaded value {self.accumulator} from memory location {operand} into accumulator.")
+            f"Loaded value {self.accumulator} from memory location {operand:03d} into accumulator.")
 
     def store(self, operand):
         self.memory.write(operand, self.accumulator)
         self.output_function(
-            f"Stored value {self.accumulator} from accumulator into memory location {operand}.")
+            f"Stored value {self.accumulator} from accumulator into memory location {operand:03d}.")
 
     def add(self, operand):
         self.accumulator += self.memory.read(operand)
         self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
-            f"Added value from memory location {operand}, new accumulator value: {self.accumulator}")
+            f"Added value from memory location {operand:03d}, new accumulator value: {self.accumulator}")
 
     def subtract(self, operand):
         self.accumulator -= self.memory.read(operand)
         self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
-            f"Subtracted value from memory location {operand}, new accumulator value: {self.accumulator}")
+            f"Subtracted value from memory location {operand:03d}, new accumulator value: {self.accumulator}")
 
     def divide(self, operand):
         if self.memory.read(operand) == 0:
@@ -92,13 +92,13 @@ class CPU:
             return
         self.accumulator //= self.memory.read(operand)
         self.output_function(
-            f"Divided by value from memory location {operand}, new accumulator value: {self.accumulator}")
+            f"Divided by value from memory location {operand:03d}, new accumulator value: {self.accumulator}")
 
     def multiply(self, operand):
         self.accumulator *= self.memory.read(operand)
         self.accumulator = self.check_overflow(self.accumulator)
         self.output_function(
-            f"Multiplied by value from memory location {operand}, new accumulator value: {self.accumulator}")
+            f"Multiplied by value from memory location {operand:03d}, new accumulator value: {self.accumulator}")
 
     def branch(self, operand):
         self.instruction_counter = operand
