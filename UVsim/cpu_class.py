@@ -6,17 +6,19 @@ class CPU:
         self.outputs = []
         self.output_function = output_function
         self.WORD_SIZE = 2**24  # 24-bit word size
+        self.MAX_VALUE = 9999   # Maximum 4-digit value
+        self.MIN_VALUE = -9999  # Minimum 4-digit value
 
     def check_overflow(self, value):
-        if value >= self.WORD_SIZE:
-            return value - 2 * self.WORD_SIZE
-        elif value < -self.WORD_SIZE:
-            return value + 2 * self.WORD_SIZE
+        if value > self.MAX_VALUE:
+            return self.MAX_VALUE
+        elif value < self.MIN_VALUE:
+            return self.MIN_VALUE
         return value
 
     def execute_instruction(self, instruction):
-        opcode = int(instruction) // 100000
-        operand = int(instruction) % 100000
+        opcode = int(instruction) // 1000
+        operand = int(instruction) % 1000
 
         if operand >= 250:
             self.output_function(f"Error: Invalid operand {operand}")
