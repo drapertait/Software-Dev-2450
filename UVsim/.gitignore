@@ -1,0 +1,12 @@
+# Ignore all .pyc files
+*.pyc
+
+# Ignore __pycache__ directories
+__pycache__/
+
+# Virtual environment
+venv/
+UVsimVenv/
+
+# Visual Studio Code
+.vscode/

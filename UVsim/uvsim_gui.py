@@ -11,6 +11,7 @@ class UVsim:
         self.simulator = simulator
         self.root = tk.Tk()
         self.root.title("UVsim GUI")
+        self.convert_content = ""
 
         # Load color scheme from configuration file
         self.primary_color, self.off_color = load_color_scheme()
@@ -254,7 +255,7 @@ class UVsim:
         if file_path:
             self.clear_outputs()  # Clear outputs before running the program
             self.simulator.load_program_from_file(file_path)
-            self.simulator.run()
+            self.simulator.run(self.convert_content)
             self.get_current_diagnostic_area().insert(tk.END, "Program rerun.\n")
         else:
             self.get_current_diagnostic_area().insert(tk.END, "No program loaded to rerun.\n")
