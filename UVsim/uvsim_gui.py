@@ -4,6 +4,7 @@ from tkinter import ttk
 from simulator_class import Simulator
 from program_loader_class import ProgramLoader
 from color_scheme import load_color_scheme, apply_color_scheme, set_color_scheme, get_contrasting_color
+from file_operations import open_file, save_file, save_file_as
 
 class UVsim:
     def __init__(self, simulator):
@@ -181,16 +182,17 @@ class UVsim:
 
     def load_program(self):
         current_tab = self.get_current_sub_tab_control().select()
-        file_path = filedialog.askopenfilename()
+        file_path,converted_content = open_file(self.get_current_text_area())
+        self.convert_content = converted_content
         self.get_current_diagnostic_area().insert(tk.END, f"Loading program from {file_path}\n")
         if file_path:
-            with open(file_path, 'r') as file:
-                content = file.read()
-            if len(content.splitlines()) > 250:
+            # with open(file_path, 'r') as file:
+            #     content = file.read()
+            if len(converted_content.splitlines()) > 250:
                 self.get_current_diagnostic_area().insert(tk.END, "Error: File exceeds the maximum allowed size of 250 lines.\n")
                 return
             self.get_current_text_area().delete(1.0, tk.END)
-            self.get_current_text_area().insert(tk.END, content)
+            self.get_current_text_area().insert(tk.END, converted_content)
             self.simulator.load_program_from_file(file_path)
             self.get_current_diagnostic_area().insert(tk.END, f"Program loaded from {file_path}\n")
             self.tab_files[current_tab] = {'file_path': file_path}
@@ -240,7 +242,8 @@ class UVsim:
             return
         program_code = [int(line) for line in program_code if line.strip().isdigit()]
         self.simulator.load_program(program_code)
-        self.simulator.run()
+        print(self.convert_content)
+        self.simulator.run(self.convert_content)
         self.get_current_diagnostic_area().insert(tk.END, "Program executed.\n")
 
     def rerun_program(self):

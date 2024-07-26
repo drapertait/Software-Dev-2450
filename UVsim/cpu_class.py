@@ -15,8 +15,8 @@ class CPU:
         return value
 
     def execute_instruction(self, instruction):
-        opcode = instruction // 100000
-        operand = instruction % 100000
+        opcode = int(instruction) // 100000
+        operand = int(instruction) % 100000
 
         if operand >= 250:
             self.output_function(f"Error: Invalid operand {operand}")

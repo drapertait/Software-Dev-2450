@@ -19,9 +19,12 @@ class Simulator:
         for i, instruction in enumerate(program):
             self.memory.write(i, instruction)
 
-    def run(self):
+    def run(self,converted_content):
         while self.cpu.instruction_counter < len(self.memory.memory):
             instruction = self.memory.read(self.cpu.instruction_counter)
+            if converted_content:
+                instructions = converted_content.splitlines()
+                instruction = instructions[self.cpu.instruction_counter]
             self.cpu.instruction_counter += 1
             if self.cpu.execute_instruction(instruction):
                 break

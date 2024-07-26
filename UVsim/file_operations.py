@@ -38,7 +38,7 @@ def open_file(text_area):
             converted_content = ""
             for line in content.splitlines():
                 print(f"Processing line: {line}")  # Debug print
-                if line.startswith('+'):
+                if line.startswith('+') or line.startswith('-'):
                     # Extract the numeric part
                     core_op = line[1:]
                     converted_op = convert_4bit_to_6bit(core_op)
@@ -50,7 +50,7 @@ def open_file(text_area):
             
             text_area.delete(1.0, tk.END)
             text_area.insert(tk.END, converted_content)
-            return file_path
+            return file_path, converted_content
         except IOError as e:
             messagebox.showerror("Error", f"Unable to open file: {e}")
     return None
