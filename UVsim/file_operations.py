@@ -53,7 +53,7 @@ def open_file(text_area):
             return file_path, converted_content
         except IOError as e:
             messagebox.showerror("Error", f"Unable to open file: {e}")
-    return None
+    return None, None #what does this none, none do?
 
 def save_file(text_area, current_file):
     """Save the content of the text area to a file."""

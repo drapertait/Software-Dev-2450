@@ -182,7 +182,7 @@ class UVsim:
 
     def load_program(self):
         current_tab = self.get_current_sub_tab_control().select()
-        file_path,converted_content = open_file(self.get_current_text_area())
+        file_path, converted_content = open_file(self.get_current_text_area())
         self.convert_content = converted_content
         self.get_current_diagnostic_area().insert(tk.END, f"Loading program from {file_path}\n")
         if file_path:
@@ -203,6 +203,7 @@ class UVsim:
                 sub_tab_control.tab(current_tab, text=file_path.split('/')[-1])
         else:
             self.get_current_diagnostic_area().insert(tk.END, "No file selected\n")
+        self.root.update_idletasks()
 
     def save_program(self):
         current_tab = self.get_current_sub_tab_control().select()
@@ -291,7 +292,7 @@ class UVsim:
             self.get_current_text_area().insert(tk.END, message + "\n")
         else:
             self.get_current_diagnostic_area().insert(tk.END, message + "\n")
-        self.root.update()
+        self.root.update_idletasks()
 
     def apply_color_scheme(self):
         apply_color_scheme(self.root, self.primary_color, self.off_color)
