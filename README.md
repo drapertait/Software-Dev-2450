@@ -31,6 +31,4 @@
 
 * Menu options and their functions.
 * Instructions on changing the color scheme.
-* Functionality and usage of the Add Command button.
-* Functionality and usage of the Delete Command button.
 * Instructions on saving the file before and after running the program.
