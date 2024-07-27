@@ -55,14 +55,12 @@ class CPU:
         value = int(self.output_function(
             f"Enter a number for memory location {operand}: "))
         self.memory.write(operand, value)
-        # output = f"Executed read (opcode 010) on memory location {operand:03d}: {value}"
-        output = f"Executed read{operand:03d}: {value}"
+        output = f"Executed read (opcode 010) on memory location {operand:03d}: {value}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
     def write(self, operand):
-        # output = f"Executed write (opcode 011) on memory location {operand:03d}: {self.memory.read(operand)}"
-        output = f"{self.memory.read(operand)}"
+        output = f"Executed write (opcode 011) on memory location {operand:03d}: {self.memory.read(operand)}"
         self.output_function(output, is_user_output=True)
         self.outputs.append(output)
 
