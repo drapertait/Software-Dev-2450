@@ -9,9 +9,9 @@ from file_operations import open_file, save_file, save_file_as
 class UVsim:
     def __init__(self, simulator):
         self.simulator = simulator
+        self.convert_content = ""
         self.root = tk.Tk()
         self.root.title("UVsim GUI")
-        self.convert_content = ""
 
         # Load color scheme from configuration file
         self.primary_color, self.off_color = load_color_scheme()
@@ -39,8 +39,8 @@ class UVsim:
         self.run_button = tk.Button(self.control_frame, text="Run", command=self.run_program, width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
         self.run_button.grid(row=0, column=2, padx=5)
 
-        self.reset_button = tk.Button(self.control_frame, text="Reset", command=self.reset_simulator, width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
-        self.reset_button.grid(row=0, column=3, padx=5)
+        # self.reset_button = tk.Button(self.control_frame, text="Reset", command=self.reset_simulator, width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
+        # self.reset_button.grid(row=0, column=3, padx=5)
 
         self.rerun_button = tk.Button(self.control_frame, text="Re-run", command=self.rerun_program, width=15, bg=self.off_color, fg=get_contrasting_color(self.off_color))
         self.rerun_button.grid(row=0, column=4, padx=5)
@@ -204,7 +204,6 @@ class UVsim:
                 sub_tab_control.tab(current_tab, text=file_path.split('/')[-1])
         else:
             self.get_current_diagnostic_area().insert(tk.END, "No file selected\n")
-        self.root.update_idletasks()
 
     def save_program(self):
         current_tab = self.get_current_sub_tab_control().select()
@@ -244,7 +243,6 @@ class UVsim:
             return
         program_code = [int(line) for line in program_code if line.strip().isdigit()]
         self.simulator.load_program(program_code)
-        print(self.convert_content)
         self.simulator.run(self.convert_content)
         self.get_current_diagnostic_area().insert(tk.END, "Program executed.\n")
 
@@ -293,7 +291,7 @@ class UVsim:
             self.get_current_text_area().insert(tk.END, message + "\n")
         else:
             self.get_current_diagnostic_area().insert(tk.END, message + "\n")
-        self.root.update_idletasks()
+        self.root.update()
 
     def apply_color_scheme(self):
         apply_color_scheme(self.root, self.primary_color, self.off_color)
@@ -301,11 +299,9 @@ class UVsim:
     def start(self):
         self.root.mainloop()
 
-
 if __name__ == "__main__":
     loader = ProgramLoader()
     gui = UVsim(None)
     simulator = Simulator(gui.output_function, loader)
     gui.simulator = simulator
     gui.start()
-
