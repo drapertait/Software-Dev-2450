@@ -76,3 +76,40 @@
 - Merge `file_operations.py` functionality with `main`
 - Ensure no bugs
 - Update documentation
+
+### Meeting 10
+
+**Date**: July 8, 2024
+
+**Meeting Report 9 (Tues. July 9, 2024)**
+
+**Attendees**:
+- Vip Monty
+- Logan Singleton
+- Tait Draper
+- Andrew Lewis
+
+**What we did in the meeting**:
+- Broke out roles for fixing milestone 4
+
+**Action Items**:
+- Fix milestone 4
+
+
+### Meeting 11
+
+**Date**: July 23, 2024
+
+**Meeting Report 11 (Tues. July 23, 2024)**
+
+**Attendees**:
+- Vip Monty
+- Logan Singleton
+- Tait Draper
+- Andrew Lewis
+
+**What we did in the meeting**:
+- Broke out the objectives for milestone 5
+
+**Action Items**:
+- Finish assigned tasks milestone 5
