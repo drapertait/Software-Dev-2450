@@ -1,0 +1,4 @@
+[DEFAULT]
+primary_color = #00ff00
+off_color = #00fffc
+

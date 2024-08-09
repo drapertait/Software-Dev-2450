@@ -1,4 +1,4 @@
-### UVSim Consolidated Requirements Document
+### UVSim Requirements:
 
 #### Project Overview
 
@@ -31,7 +31,7 @@ The UVSim is a simple virtual machine that interprets a machine language called 
 
 Each instruction is a signed four-digit or 6-digit decimal number. The first two/three digits are the operation code, and the last two/three digits are the operand (memory address).
 
-#### Milestone Deliverables
+#### Milestone 1-2 Deliverables
 
 1. **Design Document (20 pts)**
 
@@ -94,7 +94,7 @@ Each instruction is a signed four-digit or 6-digit decimal number. The first two
 
    - Meeting reports
 
-### Functional Changes for Six-Digit Commands
+### Milestone 5 Functional Changes for Six-Digit Commands
 
 1. **Expand Memory and Word Size**
 
@@ -110,7 +110,3 @@ Each instruction is a signed four-digit or 6-digit decimal number. The first two
 4. **Multiple File Support**
 
    - Open multiple files simultaneously within the GUI
-
-### Conclusion
-
-This document consolidates all requirements and deliverables for the UVSim project, providing a comprehensive guide for development, testing, and documentation. Ensure all team members contribute and adhere to these guidelines to meet the client's expectations.
